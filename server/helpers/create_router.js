@@ -42,7 +42,34 @@ const createRouter = function(collection){
     });
   });
 
+// UPDATE
+  router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const updatedData = req.body;
+    collection.updateOne({_id: ObjectId(id)}, {$set: updatedData})
+    .then(() => collection.find().toArray())
+    .then((documents) => res.json(documents))
+    .catch((error) => {
+      console.error(error);
+      res.status(500);
+      res.json({status: 500, error: error});
+    });
+  });
 
+  // // COMPLETE
+  //   router.put('/:id/:completed', (req, res) => {
+  //     const id = req.params.id;
+  //     const completed = req.params.completed;
+  //     // const updatedData = req.body;
+  //     collection.updateOne({_id: ObjectId(id)}, {$set: {"done": completed  }})
+  //     .then(() => collection.find().toArray())
+  //     .then((documents) => res.json(documents))
+  //     .catch((error) => {
+  //       console.error(error);
+  //       res.status(500);
+  //       res.json({status: 500, error: error});
+  //     });
+  //   });
 
   return router;
 };

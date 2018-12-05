@@ -17,4 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const entriesForm = document.querySelector('form#entries-form');
   const entriesFormView = new BucketFormView(entriesForm);
   entriesFormView.bindEvents();
+
+  
 });

@@ -17,8 +17,14 @@ BucketView.prototype.render = function (entry) {
   const location = this.createDetail('Location', entry.location);
   entryContainer.appendChild(location);
 
+  const status = this.createDetail('Completed', entry.isComplete);
+  entryContainer.appendChild(status);
+
   const deleteButton = this.createDeleteButton(entry._id);
   entryContainer.appendChild(deleteButton);
+
+  const statusButton = this.createStatusButton(entry._id);
+  entryContainer.appendChild(statusButton);
 
   this.container.appendChild(entryContainer);
 };
@@ -46,6 +52,16 @@ BucketView.prototype.createDeleteButton = function (entryId) {
 
   return button;
 };
-// add delete button!!!!!
+
+BucketView.prototype.createStatusButton = function (entryId) {
+  const statusButton = document.createElement('button');
+  statusButton.classList.add('status-button');
+  statusButton.value = entryId;
+  // const index = entry.findIndex(entry => entryId === entry._id);
+  statusButton.addEventListener('click', (event) => {
+    PubSub.publish('Bucket:status-changed', event.target.value);
+  });
+  return statusButton;
+};
 
 module.exports = BucketView;

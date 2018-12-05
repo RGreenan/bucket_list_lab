@@ -21,7 +21,8 @@ BucketFormView.prototype.createEntry = function (form) {
   const newEntry = {
     activity: form.activity.value,
     age: form.age.value,
-    location: form.location.value
+    location: form.location.value,
+    isComplete: form.isComplete.value
   };
   return newEntry;
   console.log(newEntry);
