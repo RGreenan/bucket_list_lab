@@ -45,13 +45,15 @@ BucketList.prototype.deleteEntry = function (entryId) {
   })
   .catch(console.error);
 };
+// const result = inventory.find( fruit => fruit.name === 'cherries' );
+
 
 BucketList.prototype.updateStatus = function (entryId) {
-  const entryToUpdate = this.entries;
+  const entryToUpdate = this.entries.find(entry => entry._id === entryId);
   console.log(entryToUpdate);
-  const payload = entryToUpdate.isComplete = !entryToUpdate.isComplete;
+  const payload = (entryToUpdate.isComplete = !entryToUpdate.isComplete);
   this.request.update(entryId, payload)
-  then((entries) => {
+  .then((entries) => {
     PubSub.publish('BucketList:data-loaded', entries);
     console.log(entries);
   })
