@@ -10,6 +10,9 @@ BucketList.prototype.bindEvents = function () {
   PubSub.subscribe('Bucket:entry-submitted', (event) => {
     this.postEntry(event.detail);
   });
+  PubSub.subscribe('BucketEntry:delete-clicked', (event) => {
+    this.deleteEntry(event.detail);
+  });
 };
 
 BucketList.prototype.getData = function () {
@@ -30,6 +33,13 @@ BucketList.prototype.postEntry = function (entry) {
   .catch(console.error);
 };
 
-// publish delete-clicked button
+BucketList.prototype.deleteEntry = function (entryId) {
+  this.request.delete(entryId)
+  .then((entries) => {
+    PubSub.publish('BucketList:data-loaded', entries);
+    console.log(entries);
+  })
+  .catch(console.error);
+};
 
 module.exports = BucketList;

@@ -17,6 +17,9 @@ BucketView.prototype.render = function (entry) {
   const location = this.createDetail('Location', entry.location);
   entryContainer.appendChild(location);
 
+  const deleteButton = this.createDeleteButton(entry._id);
+  entryContainer.appendChild(deleteButton);
+
   this.container.appendChild(entryContainer);
 };
 
